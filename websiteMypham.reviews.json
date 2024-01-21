@@ -1,0 +1,22 @@
+[
+  {
+    "rating": "5",
+    "comment": "This product is amazing!",
+    "user": "659e374ec6b9093f63cf66d3"
+  },
+  {
+    "rating": "4",
+    "comment": "Good product, but can be improved.",
+    "user": "659e374ec6b9093f63cf66d3"
+  },
+  {
+    "rating": "3",
+    "comment": "Not bad, but I expected more.",
+    "user": "anotherUserId"
+  },
+  {
+    "rating": "5",
+    "comment": "Excellent quality!",
+    "user": "yetAnotherUserId"
+  }
+]
