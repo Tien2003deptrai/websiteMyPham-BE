@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../Models/userModel');
 const checkRoleMiddleware = require('../middleware/checkRoleMiddleware');
 const verifyToken = require('../middleware/authMiddleware');
-const { getAllCheckouts } = require('../Controllers/checkoutController');
+const { getCheckout_Total } = require('../Controllers/checkoutController');
 const { getAllProducts, createOneProduct, updateOneProduct, deleteOneProduct } = require('../Controllers/productControllers');
 
 router.get('/profile', verifyToken, checkRoleMiddleware('admin'), (req, res) => {
@@ -20,6 +20,7 @@ router.get('/profile', verifyToken, checkRoleMiddleware('admin'), (req, res) => 
                     name: response.name,
                     email: response.email,
                     role: response.role,
+                    avatar: response.avatar
                 });
             }).catch((error) => {
                 console.error(error);
@@ -32,14 +33,19 @@ router.get('/profile', verifyToken, checkRoleMiddleware('admin'), (req, res) => 
     }
 });
 
-router.get('/checkout', checkRoleMiddleware('admin'), getAllCheckouts);
+/* Cái này gửi cho máy chủ, thì máy chủ login rồi mới lấy được thì ỉa quá - 
+có biện pháp 2 là tách riêng về (api/checkout) */
+
+router.get('/checkoutTotal', checkRoleMiddleware('admin'), getCheckout_Total);
+
+router.get('/checkout', checkRoleMiddleware('admin'), getAllProducts);
 
 router.get('/products', checkRoleMiddleware('admin'), getAllProducts);
 
 router.post('/products/create', checkRoleMiddleware('admin'), createOneProduct);
 
-router.post('/products/update/:id', checkRoleMiddleware('admin'), updateOneProduct);
+router.put('/products/update/:id', checkRoleMiddleware('admin'), updateOneProduct);
 
-router.post('/products/delete/:id', checkRoleMiddleware('admin'), deleteOneProduct);
+router.delete('/products/delete/:id', checkRoleMiddleware('admin'), deleteOneProduct);
 
 module.exports = router;

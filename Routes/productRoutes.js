@@ -4,7 +4,9 @@ const {
     getOneProduct,
     createOneProduct,
     updateOneProduct,
-    deleteOneProduct
+    deleteOneProduct,
+    getAllProductsByCategory,
+    getAllProductsByRating
 } = require('../Controllers/productControllers');
 const router = express.Router();
 
@@ -17,5 +19,10 @@ router.post('/create', createOneProduct);
 router.put('/update/:productId', updateOneProduct);
 
 router.delete('/delete/:productId', deleteOneProduct);
+
+router.get('/category/:category', getAllProductsByCategory);
+
+router.get('/rating/:rating', getAllProductsByRating);
+
 
 module.exports = router;

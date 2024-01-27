@@ -24,24 +24,24 @@ const userSchema = new mongoose.Schema(
         role: {
             type: String,
             default: 'customer',
-            required: true,
             minlength: 4,
             maxlength: 10,
         },
         country: {
             type: String,
-            required: true,
+            default: ""
         },
-        img: {
-            type: Array,
+        avatar: {
+            type: String,
+            default: '',
         },
         city: {
             type: String,
-            required: true,
+            default: ""
         },
         phone: {
-            type: String,
-            required: true,
+            type: Number,
+            default: 0
         },
     },
     {

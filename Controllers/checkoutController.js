@@ -46,7 +46,7 @@ const getCheckOut = async (req, res) => {
 const getAllCheckouts = async (req, res) => {
     try {
 
-        const checkouts = await Checkout.find().populate('user', 'name');
+        const checkouts = await Checkout.find().populate('customer', 'name');
 
         res.status(200).json({ success: true, checkouts });
     } catch (error) {
@@ -55,5 +55,51 @@ const getAllCheckouts = async (req, res) => {
     }
 };
 
+const getCheckout_Total = async (req, res) => {
+    /* Sử dụng aggregation framework của MongoDB để tính toán
+     thông tin tổng hợp về sản phẩm trong checkout */
+    try {
+        const checkoutData = await Checkout.aggregate([
+            {
+                $unwind: '$products'
+            },
+            {
+                $group: {
+                    _id: '$products.product',
+                    title: { $first: '$products.name' },
+                    totalQuantity: { $sum: '$products.quantity' },
+                    totalAmount: { $sum: '$products.price' }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    title: 1,
+                    totalQuantity: 1,
+                    totalAmount: 1
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalAllQuantity: { $sum: '$totalQuantity' },
+                    totalAllAmount: { $sum: '$totalAmount' }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    totalAllQuantity: 1,
+                    totalAllAmount: 1
+                }
+            }
+        ]);
 
-module.exports = { getCheckOut, getAllCheckouts };
+        res.status(200).json({ success: true, checkoutData });
+    } catch (error) {
+        console.error('Error fetching checkout data:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};
+
+module.exports = { getCheckOut, getAllCheckouts, getCheckout_Total };

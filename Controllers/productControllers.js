@@ -67,11 +67,41 @@ const deleteOneProduct = async (req, res) => {
     }
 }
 
+const getAllProductsByCategory = async (req, res) => {
+    const category = req.params.category; // Lấy category từ tham số trong URL
+    try {
+        const products = await productModel.find({ category: category });
+        if (!products || products.length === 0) {
+            return res.status(404).json({ message: `No products found in category: ${category}` });
+        }
+        res.status(200).json(products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
+
+const getAllProductsByRating = async (req, res) => {
+    const rating = req.params.rating; // Lấy category từ tham số trong URL
+    try {
+        const products = await productModel.find({ rating: rating });
+        if (!products || products.length === 0) {
+            return res.status(404).json({ message: `No products found in category: ${rating}` });
+        }
+        res.status(200).json(products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
+
 module.exports = {
     getAllProducts,
     getOneProduct,
     createOneProduct,
     updateOneProduct,
     deleteOneProduct,
+    getAllProductsByCategory,
+    getAllProductsByRating
 }
 
