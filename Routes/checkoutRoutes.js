@@ -5,3 +5,5 @@ const { getCheckOut } = require('../Controllers/checkoutController');
 router.post('/', getCheckOut);
 
 module.exports = router;
+
+

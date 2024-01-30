@@ -14,11 +14,11 @@ router.get('/', getAllProducts);
 
 router.get('/:productId', getOneProduct);
 
-router.post('/create', createOneProduct);
+// router.post('/create', createOneProduct);
 
-router.put('/update/:productId', updateOneProduct);
+// router.put('/update/:productId', updateOneProduct);
 
-router.delete('/delete/:productId', deleteOneProduct);
+// router.delete('/delete/:productId', deleteOneProduct);
 
 router.get('/category/:category', getAllProductsByCategory);
 

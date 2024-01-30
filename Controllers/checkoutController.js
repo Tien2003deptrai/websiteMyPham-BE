@@ -56,8 +56,6 @@ const getAllCheckouts = async (req, res) => {
 };
 
 const getCheckout_Total = async (req, res) => {
-    /* Sử dụng aggregation framework của MongoDB để tính toán
-     thông tin tổng hợp về sản phẩm trong checkout */
     try {
         const checkoutData = await Checkout.aggregate([
             {
@@ -68,7 +66,9 @@ const getCheckout_Total = async (req, res) => {
                     _id: '$products.product',
                     title: { $first: '$products.name' },
                     totalQuantity: { $sum: '$products.quantity' },
-                    totalAmount: { $sum: '$products.price' }
+                    totalAmount: { $sum: '$products.price' },
+                    startTime: { $min: '$createdAt' },  // Include the start time
+                    endTime: { $max: '$createdAt' }      // Include the end time
                 }
             },
             {
@@ -76,21 +76,27 @@ const getCheckout_Total = async (req, res) => {
                     _id: 0,
                     title: 1,
                     totalQuantity: 1,
-                    totalAmount: 1
+                    totalAmount: 1,
+                    startTime: 1,
+                    endTime: 1
                 }
             },
             {
                 $group: {
                     _id: null,
                     totalAllQuantity: { $sum: '$totalQuantity' },
-                    totalAllAmount: { $sum: '$totalAmount' }
+                    totalAllAmount: { $sum: '$totalAmount' },
+                    startTime: { $min: '$startTime' },  // Include the overall start time
+                    endTime: { $max: '$endTime' }      // Include the overall end time
                 }
             },
             {
                 $project: {
                     _id: 0,
                     totalAllQuantity: 1,
-                    totalAllAmount: 1
+                    totalAllAmount: 1,
+                    startTime: 1,
+                    endTime: 1
                 }
             }
         ]);
@@ -101,5 +107,7 @@ const getCheckout_Total = async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
+
+
 
 module.exports = { getCheckOut, getAllCheckouts, getCheckout_Total };
