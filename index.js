@@ -11,6 +11,7 @@ const checkoutRouter = require('./Routes/checkoutRoutes');
 // 5000
 
 const app = express();
+
 require('dotenv').config();
 
 app.use(cookieParser());
@@ -19,12 +20,17 @@ app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true,
 }));
+
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+
 app.use('/api/admin', adminRouter);
+
 app.use('/api/customer', cusRouter);
+
 app.use('/api/products', productRouter);
+
 app.use('/api/checkout', checkoutRouter);
 
 const PORT = process.env.PORT || 5000;
