@@ -67,12 +67,12 @@ const deleteOneProduct = async (req, res) => {
     }
 }
 
-const getAllProductsByCategory = async (req, res) => {
-    const category = req.params.category; // Lấy category từ tham số trong URL
+const getAllProductsBybrand = async (req, res) => {
+    const brand = req.params.brand;
     try {
-        const products = await productModel.find({ category: category });
+        const products = await productModel.find({ brand: brand });
         if (!products || products.length === 0) {
-            return res.status(404).json({ message: `No products found in category: ${category}` });
+            return res.status(404).json({ message: `No products found in brand: ${brand}` });
         }
         res.status(200).json(products);
     } catch (error) {
@@ -82,11 +82,11 @@ const getAllProductsByCategory = async (req, res) => {
 }
 
 const getAllProductsByRating = async (req, res) => {
-    const rating = req.params.rating; // Lấy category từ tham số trong URL
+    const rating = req.params.rating;
     try {
         const products = await productModel.find({ rating: rating });
         if (!products || products.length === 0) {
-            return res.status(404).json({ message: `No products found in category: ${rating}` });
+            return res.status(404).json({ message: `No products found in brand: ${rating}` });
         }
         res.status(200).json(products);
     } catch (error) {
@@ -101,7 +101,7 @@ module.exports = {
     createOneProduct,
     updateOneProduct,
     deleteOneProduct,
-    getAllProductsByCategory,
+    getAllProductsBybrand,
     getAllProductsByRating
 }
 
