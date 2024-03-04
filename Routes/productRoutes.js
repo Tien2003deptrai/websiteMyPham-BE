@@ -5,7 +5,7 @@ const {
     createOneProduct,
     updateOneProduct,
     deleteOneProduct,
-    getAllProductsByCategory,
+    getAllProductsBybrand,
     getAllProductsByRating
 } = require('../Controllers/productControllers');
 const router = express.Router();
@@ -20,7 +20,7 @@ router.get('/:productId', getOneProduct);
 
 // router.delete('/delete/:productId', deleteOneProduct);
 
-router.get('/category/:category', getAllProductsByCategory);
+router.get('/brand/:brand', getAllProductsBybrand);
 
 router.get('/rating/:rating', getAllProductsByRating);
 

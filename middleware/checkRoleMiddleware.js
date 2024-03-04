@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-
 const decodeAccessToken = (accessToken) => {
     return jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
 };
@@ -29,5 +28,8 @@ const checkRoleMiddleware = (requiredRole) => {
         }
     };
 };
+
+
+
 
 module.exports = checkRoleMiddleware;

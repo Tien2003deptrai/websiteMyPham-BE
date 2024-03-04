@@ -46,7 +46,7 @@ const getCheckOut = async (req, res) => {
 const getAllCheckouts = async (req, res) => {
     try {
 
-        const checkouts = await Checkout.find().populate('customer', 'name');
+        const checkouts = await Checkout.find();
 
         res.status(200).json({ success: true, checkouts });
     } catch (error) {

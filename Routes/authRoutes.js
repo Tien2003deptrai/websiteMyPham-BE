@@ -10,7 +10,9 @@ const {
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
+
 router.post('/loginGet', loginUserGetData);
+
 router.post('/loginWithToken', loginUserWithToken);
 
 module.exports = router;
